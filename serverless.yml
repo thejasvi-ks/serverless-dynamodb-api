@@ -1,0 +1,70 @@
+service: serverless-dynamodb-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  timeout: 10
+  environment:
+    DYNAMODB_TABLE: ${self:custom.customTableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+functions:
+  createMovie:
+    handler: movies/createMovie.CreateMovie
+    events:
+      - http:
+          path: movies
+          method: post
+          cors: true
+    layers:
+      - {Ref: NodemodulesLambdaLayer}
+
+  listMovies:
+    handler: movies/listMovies.GetMovies
+    events:
+      - http:
+          path: movies
+          method: get
+          cors: true
+    layers:
+      - {Ref: NodemodulesLambdaLayer}
+
+custom:
+  customTableName: movies
+
+resources:
+  Resources:
+    MoviesDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+layers:
+  nodemodules:
+    path: layers
+    name: ${self:provider.stage}-node_modules
+    description: Node Modules
+    
+plugins:
+- serverless-offline
