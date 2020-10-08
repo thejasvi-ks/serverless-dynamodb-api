@@ -11,28 +11,31 @@ Node.js v10.x or later.
 
 ## Installation
 
-Clone this project,
+After cloning this project, execute the below commands.
 
 ```
-# npm install
-# npm install -g serverless
+$ npm install
+$ npm install -g serverless
 ```
-	To test locally, install this too as a dev dependancy.
-	# npm install serverless-offline --save-dev
+To test locally, install this too as a dev dependancy.
+```
+$ npm install serverless-offline --save-dev
+```
 
 
 # Configuration
+
 You need to configure your AWS credentials. You can find the information needed below;
 https://serverless.com/framework/docs/providers/aws/guide/credentials/
 
 After obtaining the Key and Secret to access AWS programmatically, run the below command to configure from your development machine.
 ```
-# serverless config credentials --provider aws --key xxxxxxxxxxxxxx --secret xxxxxxxxxxxxxx ('sls' is short for 'serverless' )
+$ serverless config credentials --provider aws --key xxxxxxxxxxxxxx --secret xxxxxxxxxxxxxx ('sls' is short for 'serverless' )
 ```
 Create a copy of NodeJS starter template and move into the directory.
 
 ```
-## sls create -t aws-nodejs -p serverless-dynamodb-api && cd serverless-dynamodb-api
+$ sls create -t aws-nodejs -p serverless-dynamodb-api && cd serverless-dynamodb-api
 ```
 # Usage
 
