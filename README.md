@@ -34,7 +34,7 @@ Create a copy of NodeJS starter template and move into the directory.
 ```
 ## sls create -t aws-nodejs -p serverless-dynamodb-api && cd serverless-dynamodb-api
 ```
-##Usage
+## Usage
 
 This code base has two end points CreateMovie which is used to create a Movie Record & ListMovies , which is used to List out all the Movies from the database.
 
