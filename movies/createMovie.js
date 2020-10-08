@@ -6,7 +6,10 @@ const uuid = require("uuid");
 const dynamoDb = new aws.DynamoDB.DocumentClient();
 
 module.exports.CreateMovie = (event, context, cb) => {
-  const data = JSON.parse(event.body);
+  let data;
+  if (event.body !== null && event.body !== undefined) {
+    data = JSON.parse(event.body);
+  }
 
   if (!data) {
     cb(null, {
